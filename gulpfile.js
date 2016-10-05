@@ -9,7 +9,8 @@ var gulp = require('gulp'),
 	maps = require('gulp-sourcemaps'),
 imagemin = require('gulp-imagemin'),
 	 del = require('del'),
-  useref = require('gulp-useref');
+  useref = require('gulp-useref'),
+  eslint = require('gulp-eslint');
 
 gulp.task('concatScripts', function() {
 	return gulp.src([
@@ -24,6 +25,9 @@ gulp.task('concatScripts', function() {
 
 gulp.task('scripts', ['concatScripts'], function() {
 	return gulp.src(['js/global.js'])
+	.pipe(eslint())
+	.pipe(eslint.format())
+	.pipe(eslint.failAfterError())
 	.pipe(uglify())
 	.pipe(rename('all.min.js'))
 	.pipe(gulp.dest('dist/scripts'));
