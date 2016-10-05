@@ -7,7 +7,5 @@ node_modules
 #ignore (some) generated files
 dist
 css
-
-# global.js is in original repository so ignoring it doesn't work.
-# Would need to remove it from repository to do so, decided not to.
-#global.js
+global.js
+global.map.js

@@ -13,7 +13,9 @@ gulp.task('concatScripts', function() {
 		'js/jquery-3.1.1.js',
 		'js/circle/autogrow.js',
 		'js/circle/circle.js'])
+	.pipe(maps.init())
 	.pipe(concat('global.js'))
+	.pipe(maps.write('./'))
 	.pipe(gulp.dest('js'));
 });
 
