@@ -1,0 +1,23 @@
+{
+  "name": "gulp-build-v1",
+  "version": "1.0.0",
+  "description": "Demonstration of Gulp",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevemasteller/gulp-build-v1.git"
+  },
+  "author": "Steve Masteller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevemasteller/gulp-build-v1/issues"
+  },
+  "homepage": "https://github.com/stevemasteller/gulp-build-v1#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0"
+  }
+}
