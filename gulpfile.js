@@ -8,7 +8,8 @@ var gulp = require('gulp'),
  cssnano = require('gulp-cssnano'),
 	maps = require('gulp-sourcemaps'),
 imagemin = require('gulp-imagemin'),
-	 del = require('del');
+	 del = require('del'),
+  useref = require('gulp-useref');
 
 gulp.task('concatScripts', function() {
 	return gulp.src([
@@ -49,16 +50,29 @@ gulp.task('images', function() {
 	.pipe(gulp.dest('dist/content'));
 });
 
+gulp.task('html', function() {
+	gulp.src('index.html')
+	.pipe(useref())
+	.pipe(gulp.dest('dist'));
+});
+
 gulp.task('clean', function() {
-	del([
+	return del([
 		'dist',
 		'css',
 		'js/global.js*']);
 });
 
-gulp.task('build', ['scripts', 'styles', 'images'], function() {
-	return gulp.src(['index.html'])
-	.pipe(gulp.dest('dist'));
+gulp.task('watchFiles', function() {
+  gulp.watch(['sass/*.scss', 'sass/**/*.sass'], ['styles']);	
+  gulp.watch(['js/circle/*.js'], ['scripts']);
 });
+
+gulp.task('build', ['clean'], function() {
+	gulp.start(['scripts', 'styles', 'images']);
+});
+
+// http-server -p 3000
+gulp.task('serve', ['watchFiles'])
 
 gulp.task('default', ['build']);
