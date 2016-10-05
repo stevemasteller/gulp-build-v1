@@ -6,10 +6,11 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
     sass = require('gulp-sass'),
  cssnano = require('gulp-cssnano'),
-	maps = require('gulp-sourcemaps');
+	maps = require('gulp-sourcemaps'),
+imagemin = require('gulp-imagemin');
 
 gulp.task('concatScripts', function() {
-	gulp.src([
+	return gulp.src([
 		'js/jquery-3.1.1.js',
 		'js/circle/autogrow.js',
 		'js/circle/circle.js'])
@@ -19,7 +20,7 @@ gulp.task('concatScripts', function() {
 	.pipe(gulp.dest('js'));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts', ['concatScripts'], function() {
 	gulp.src(['js/global.js'])
 	.pipe(uglify())
 	.pipe(rename('all.min.js'))
@@ -27,20 +28,28 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('compileSass', function() {
-	gulp.src(['sass/global.scss'])
+	return gulp.src(['sass/global.scss'])
 	.pipe(maps.init())
 	.pipe(sass())
 	.pipe(maps.write('./'))
 	.pipe(gulp.dest('css'));
 });
 
-gulp.task('styles', function() {
-	gulp.src(['css/global.css'])
+gulp.task('styles', ['compileSass'], function() {
+	return gulp.src(['css/global.css'])
 	.pipe(cssnano())
 	.pipe(rename('all.min.css'))
 	.pipe(gulp.dest('dist/styles'));
 });
 
-gulp.task('default', ['hello'], function() {
-	console.log('This is the default task.');
+gulp.task('images', function() {
+	return gulp.src('images/*')
+	.pipe(imagemin())
+	.pipe(gulp.dest('dist/content'))
 });
+
+gulp.task('build', [
+	'scripts',
+	'styles']);
+
+gulp.task('default', ['build']);

@@ -4,8 +4,8 @@
 # node.js modules
 node_modules
 
-#ignore (some) generated files
+#ignore generated files
 dist
 css
 global.js
-global.map.js
+global.js.map
