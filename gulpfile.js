@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
  cssnano = require('gulp-cssnano'),
 	maps = require('gulp-sourcemaps'),
-imagemin = require('gulp-imagemin');
+imagemin = require('gulp-imagemin'),
+	 del = require('del');
 
 gulp.task('concatScripts', function() {
 	return gulp.src([
@@ -45,11 +46,19 @@ gulp.task('styles', ['compileSass'], function() {
 gulp.task('images', function() {
 	return gulp.src('images/*')
 	.pipe(imagemin())
-	.pipe(gulp.dest('dist/content'))
+	.pipe(gulp.dest('dist/content'));
 });
 
-gulp.task('build', [
-	'scripts',
-	'styles']);
+gulp.task('clean', function() {
+	del([
+		'dist',
+		'css',
+		'js/global.js*']);
+});
+
+gulp.task('build', ['scripts', 'styles', 'images'], function() {
+	return gulp.src(['index.html'])
+	.pipe(gulp.dest('dist'));
+});
 
 gulp.task('default', ['build']);
