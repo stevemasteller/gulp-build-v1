@@ -5,10 +5,12 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   rename = require('gulp-rename'),
     sass = require('gulp-sass'),
- cssnano = require('gulp-cssnano');
+ cssnano = require('gulp-cssnano'),
+	maps = require('gulp-sourcemaps');
 
 gulp.task('concatScripts', function() {
 	gulp.src([
+		'js/jquery-3.1.1.js',
 		'js/circle/autogrow.js',
 		'js/circle/circle.js'])
 	.pipe(concat('global.js'))
@@ -24,7 +26,9 @@ gulp.task('scripts', function() {
 
 gulp.task('compileSass', function() {
 	gulp.src(['sass/global.scss'])
+	.pipe(maps.init())
 	.pipe(sass())
+	.pipe(maps.write('./'))
 	.pipe(gulp.dest('css'));
 });
 
