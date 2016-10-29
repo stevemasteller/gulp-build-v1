@@ -17,17 +17,18 @@
 ************************************************************/
 'use strict';
 
-var gulp = require('gulp'),
-  concat = require('gulp-concat'),		// concatenate files
-  uglify = require('gulp-uglify'),		// minify JavaScript
-  rename = require('gulp-rename'),		// rename a file
-    sass = require('gulp-sass'),		// compile SAss
- cssnano = require('gulp-cssnano'),		// minify CSS
-	maps = require('gulp-sourcemaps'),	// create source maps
-imagemin = require('gulp-imagemin'),	// minify images
-	 del = require('del'),				// delete directories and files
-  useref = require('gulp-useref'),		// replace css and js references in html
-  eslint = require('gulp-eslint');		// lint
+var gulp 	= require('gulp'),
+  concat 	= require('gulp-concat'),		// concatenate files
+  uglify 	= require('gulp-uglify'),		// minify JavaScript
+  rename 	= require('gulp-rename'),		// rename a file
+    sass 	= require('gulp-sass'),		// compile SAss
+ cssnano 	= require('gulp-cssnano'),		// minify CSS
+	maps 	= require('gulp-sourcemaps'),	// create source maps
+imagemin 	= require('gulp-imagemin'),	// minify images
+	 del 	= require('del'),				// delete directories and files
+  useref 	= require('gulp-useref'),		// replace css and js references in html
+  eslint 	= require('gulp-eslint'),		// lint
+browserSync = require('browser-sync').create(); // for starting the server
 
 // Concatenate the .js sources into a single file
 // map it, and put it in js/global.js. js/global.js 
@@ -115,10 +116,15 @@ gulp.task('build', ['clean'], function() {
 	return gulp.start(['html', 'images']);
 });
 
-// serves watchFiles when a local server is
-// running like:
-// 		http-server -p 3000
-gulp.task('serve', ['watchFiles'])
+// starts server on localhost:3000
+gulp.task('serve', function() {
+	browserSync.init({
+		server: {
+			baseDir: "dist"
+		}
+		
+	});
+});
 
 // defualts 'gulp build' to just 'gulp'
 gulp.task('default', ['build']);
