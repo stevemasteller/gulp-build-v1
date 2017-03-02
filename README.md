@@ -9,4 +9,4 @@ Output for development is in the home directory structure gulp-build-v1. Output 
  
 Treehouse Full-Stack Techdegree project 8
 
-My work: gulpfile.js
+My work: gulpfile.js, ESLint
